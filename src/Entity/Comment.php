@@ -25,13 +25,14 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity="Content", inversedBy="comments")
      */
-    private $target;
+    private $parent;
 
     public function __construct()
     {
         $this->id = uuid_create(UUID_TYPE_RANDOM);
     }
 
+    // for now return a string because uuid is not a real type
     public function getId(): ?string
     {
         return $this->id;
@@ -49,14 +50,14 @@ class Comment
         return $this;
     }
 
-    public function getTarget(): ?Content
+    public function getParent(): ?Content
     {
-        return $this->target;
+        return $this->parent;
     }
 
-    public function setTarget(?Content $target): self
+    public function setParent(?Content $target): self
     {
-        $this->target = $target;
+        $this->parent = $parent;
 
         return $this;
     }
