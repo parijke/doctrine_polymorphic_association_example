@@ -20,8 +20,7 @@ abstract class Content
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="guid", unique=true)
      */
     private $id;
     
@@ -38,10 +37,11 @@ abstract class Content
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->id = uuid_create(UUID_TYPE_RANDOM);
     }
 
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

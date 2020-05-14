@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,8 +13,7 @@ class Comment
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="guid", unique=true)
      */
     private $id;
 
@@ -27,7 +27,12 @@ class Comment
      */
     private $target;
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->id = uuid_create(UUID_TYPE_RANDOM);
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -54,5 +59,10 @@ class Comment
         $this->target = $target;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+      return substr($this->getContent(),1,20);
     }
 }
